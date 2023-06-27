@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -53,19 +55,27 @@ export default {
       this.$router.push("/home");
     },
     login() {
-      // Llamada a la API para validar las credenciales del usuario
-      // Aquí debes reemplazar la URL y el método con los adecuados para tu API
+      if (localStorage.getItem("usuarioAutenticado")) {
+        localStorage.removeItem("usuarioAutenticado");
+      }
       axios
-        .post("https://api.example.com/login", {
-          email: this.email,
+        .post("http://localhost:5158/api/Usuario/SignIn", {
+          correo: this.email,
           password: this.password,
         })
         .then((response) => {
-          // Si las credenciales son válidas, redirige a la página principal o realiza otras acciones necesarias
-          this.$router.push("/home");
+          const usuario = response.data;
+          localStorage.setItem("usuarioAutenticado", JSON.stringify(usuario));
+
+          if (usuario.tipo === "postulante") {
+            this.$router.push("/postulante");
+          } else if (usuario.tipo === "empresa") {
+            this.$router.push(`/perfilEmpresa/${usuario.idUsuario}`);
+          } else if (usuario.tipo === "admin") {
+            this.$router.push("/admin");
+          }
         })
         .catch((error) => {
-          // Si las credenciales no son válidas, muestra un mensaje de error o realiza otras acciones necesarias
           console.error("Error de inicio de sesión:", error);
         });
     },
