@@ -45,11 +45,11 @@ export default {
   computed: {
     esEmpresaAutenticada() {
       const empresaAutenticada = JSON.parse(
-        localStorage.getItem("usuarioAutenticado")
+        localStorage.getItem("empresaAutenticada")
       );
 
       const empresaAutenticadaId = empresaAutenticada
-        ? empresaAutenticada.idUsuario.toString()
+        ? empresaAutenticada.idEmpresa.toString()
         : null;
       return empresaAutenticadaId === this.$route.params.id;
     },
@@ -57,7 +57,7 @@ export default {
   methods: {
     obtenerDatosEmpresa(id) {
       axios
-        .get(`http://localhost:5158/api/Empresa/GetByUsuario/${id}`)
+        .get(`http://localhost:5158/api/Empresa/${id}`)
         .then((response) => {
           this.empresa = response.data;
         })
