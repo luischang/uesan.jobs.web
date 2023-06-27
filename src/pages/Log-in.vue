@@ -34,7 +34,8 @@
       @click="login"
     ></q-btn>
 
-    <button class="register-button">¿Busca trabajo? Regístrese</button>
+    <button @click = "goRegistrationPostulante" class="register-button">¿Busca trabajo? ¡Regístrese como postulante!</button>
+    <button @click = "goRegistrationEmpresa" class="register-button">¿Ofrece trabajo? ¡Regístrese como empresa!</button>
   </div>
 </template>
 
@@ -50,6 +51,12 @@ export default {
     };
   },
   methods: {
+    goRegistrationEmpresa(){
+      this.$router.push("/registroEmpresa");
+    }, 
+    goRegistrationPostulante(){
+      this.$router.push("/registroPostulante")
+    },
     goToHome() {
       // Redireccionar a la página Home
       this.$router.push("/home");
@@ -146,5 +153,8 @@ export default {
   color: white;
   text-decoration: underline;
   cursor: pointer;
+  margin-bottom: 0rem;
+  padding-bottom: 0rem;
+  margin-top: 1rem;
 }
 </style>
