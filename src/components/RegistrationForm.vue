@@ -87,14 +87,13 @@ export default {
         .post(url, this.empresa)
         .then((response) => {
           console.log("Aquí va la respuesta " + JSON.stringify(response));
+          this.$router.push("/home");
           this.$q.notify({
             message: "Registro exitoso",
             color: "positive",
             position: "bottom",
             timeout: 3000,
           });
-          this.resetForm();
-          this.$router.push("/");
         })
         .catch((error) => {
           console.log("Ocurrió un error " + error);
