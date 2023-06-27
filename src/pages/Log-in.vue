@@ -55,8 +55,14 @@ export default {
       this.$router.push("/home");
     },
     login() {
-      if (localStorage.getItem("usuarioAutenticado")) {
-        localStorage.removeItem("usuarioAutenticado");
+      if (localStorage.getItem("postulanteAutenticado")) {
+        localStorage.removeItem("postulanteAutenticado");
+      }
+      if (localStorage.getItem("empresaAutenticada")) {
+        localStorage.removeItem("empresaAutenticada");
+      }
+      if (localStorage.getItem("adminAutenticado")) {
+        localStorage.removeItem("adminAutenticado");
       }
       axios
         .post("http://localhost:5158/api/Usuario/SignIn", {
@@ -65,13 +71,18 @@ export default {
         })
         .then((response) => {
           const usuario = response.data;
-          localStorage.setItem("usuarioAutenticado", JSON.stringify(usuario));
-
-          if (usuario.tipo === "postulante") {
-            this.$router.push("/postulante");
-          } else if (usuario.tipo === "empresa") {
-            this.$router.push(`/perfilEmpresa/${usuario.idUsuario}`);
-          } else if (usuario.tipo === "admin") {
+          console.log(usuario);
+          if (usuario.usuario.tipo === "postulante") {
+            localStorage.setItem(
+              "postulanteAutenticado",
+              JSON.stringify(usuario)
+            );
+            this.$router.push(`/perfilPostulante/${usuario.idPostulante}`);
+          } else if (usuario.usuario.tipo === "empresa") {
+            localStorage.setItem("empresaAutenticada", JSON.stringify(usuario));
+            this.$router.push(`/perfilEmpresa/${usuario.idEmpresa}`);
+          } else if (usuario.usuario.tipo === "admin") {
+            localStorage.setItem("adminAutenticado", JSON.stringify(usuario));
             this.$router.push("/admin");
           }
         })
