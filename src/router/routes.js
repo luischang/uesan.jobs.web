@@ -20,6 +20,10 @@ const routes = [
     path: "/crearOferta",
     component: () => import("components/CrearOferta.vue"),
   },
+  {
+    path: "/OfertaCompetencias",
+    component: () => import("components/OfertaCompetencias.vue"),
+  },
   // Always leave this as the last one,
   // but you can also remove it
   {

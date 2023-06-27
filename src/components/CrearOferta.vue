@@ -96,13 +96,13 @@ export default {
         .get(url)
         .then((response) => {
           this.listaEmpresas = response.data;
-          this.oferta.empresa.idEmpresa = this.getEmpresaId();
+          this.oferta.empresa.idEmpresa = this.getEmpresa();
         })
         .catch((error) => {
           console.error("Error al obtener las empresas:", error);
         });
     },
-    getEmpresaId() {
+    getEmpresa() {
       const usuarioAutenticado = JSON.parse(
         localStorage.getItem("usuarioAutenticado")
       );
@@ -122,20 +122,23 @@ export default {
     },
 
     createOffer() {
+      if (localStorage.getItem("ofertaCreada")) {
+        localStorage.removeItem("ofertaCreada");
+      }
       const url = "http://localhost:5158/api/Oferta/CreateOferta";
 
       axios
         .post(url, this.oferta)
         .then((response) => {
+          const oferta = response.data;
+          localStorage.setItem("ofertaCreada", response.data);
+          const ofertaCreada = JSON.parse(localStorage.getItem("ofertaCreada"));
+          if (ofertaCreada) {
+            console.log(ofertaCreada);
+          }
           console.log("Aquí va la respuesta " + JSON.stringify(response));
           this.resetForm();
-          this.$router.push("/");
-          this.$q.notify({
-            message: "Oferta creada exitosamente",
-            color: "positive",
-            position: "bottom",
-            timeout: 3000,
-          });
+          this.$router.push("/OfertaCompetencias");
         })
         .catch((error) => {
           console.log("Ocurrió un error " + error);
@@ -158,7 +161,7 @@ export default {
       this.oferta.funciones = "";
       this.oferta.ubicacion = "";
       this.oferta.modalidad = "";
-      this.oferta.empresa.idEmpresa = this.getEmpresaId();
+      this.oferta.empresa.idEmpresa = this.getEmpresa();
     },
   },
 };
