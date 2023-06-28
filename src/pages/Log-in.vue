@@ -34,8 +34,12 @@
       @click="login"
     ></q-btn>
 
-    <button @click = "goRegistrationPostulante" class="register-button">¿Busca trabajo? ¡Regístrese como postulante!</button>
-    <button @click = "goRegistrationEmpresa" class="register-button">¿Ofrece trabajo? ¡Regístrese como empresa!</button>
+    <button @click="goRegistrationPostulante" class="register-button">
+      ¿Busca trabajo? ¡Regístrese como postulante!
+    </button>
+    <button @click="goRegistrationEmpresa" class="register-button">
+      ¿Ofrece trabajo? ¡Regístrese como empresa!
+    </button>
   </div>
 </template>
 
@@ -51,11 +55,11 @@ export default {
     };
   },
   methods: {
-    goRegistrationEmpresa(){
+    goRegistrationEmpresa() {
       this.$router.push("/registroEmpresa");
-    }, 
-    goRegistrationPostulante(){
-      this.$router.push("/registroPostulante")
+    },
+    goRegistrationPostulante() {
+      this.$router.push("/registroPostulante");
     },
     goToHome() {
       // Redireccionar a la página Home
@@ -79,16 +83,24 @@ export default {
         .then((response) => {
           const usuario = response.data;
           console.log(usuario);
-          if (usuario.usuario.tipo === "postulante") {
+          if (
+            usuario &&
+            usuario.usuario &&
+            usuario.usuario.tipo === "postulante"
+          ) {
             localStorage.setItem(
               "postulanteAutenticado",
               JSON.stringify(usuario)
             );
             this.$router.push(`/perfilPostulante/${usuario.idPostulante}`);
-          } else if (usuario.usuario.tipo === "empresa") {
+          } else if (
+            usuario &&
+            usuario.usuario &&
+            usuario.usuario.tipo === "empresa"
+          ) {
             localStorage.setItem("empresaAutenticada", JSON.stringify(usuario));
             this.$router.push(`/perfilEmpresa/${usuario.idEmpresa}`);
-          } else if (usuario.usuario.tipo === "admin") {
+          } else if (usuario && usuario.tipo === "admin") {
             localStorage.setItem("adminAutenticado", JSON.stringify(usuario));
             this.$router.push("/admin");
           }

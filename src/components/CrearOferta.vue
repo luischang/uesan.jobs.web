@@ -103,14 +103,14 @@ export default {
         });
     },
     getEmpresa() {
-      const usuarioAutenticado = JSON.parse(
-        localStorage.getItem("usuarioAutenticado")
+      const empresaAutenticada = JSON.parse(
+        localStorage.getItem("empresaAutenticada")
       );
 
-      if (usuarioAutenticado) {
-        const idUsuario = usuarioAutenticado.idUsuario;
+      if (empresaAutenticada) {
+        const idEmpresa = empresaAutenticada.idEmpresa;
         const empresa = this.listaEmpresas.find(
-          (e) => e.usuario.idUsuario === idUsuario
+          (e) => e.idEmpresa === idEmpresa
         );
 
         if (empresa) {
