@@ -40,6 +40,10 @@ const routes = [
     path: "/OfertaPostular/:id",
     component: () => import("components/OfertaPostular.vue"),
   },
+  {
+    path: "/home",
+    component: () => import("components/Home.vue"),
+  },
   // Always leave this as the last one,
   // but you can also remove it
   {
