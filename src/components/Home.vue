@@ -1,45 +1,53 @@
 <template>
-  <div class="home-page">
-    <header class="header">
-      <div class="logo">
-        <img src="src/assets/jobsitelogo.png" alt="Logo" />
-      </div>
-      <div class="buttons">
-        <button class="enter-button">Ingresar</button>
-        <div class="dropdown">
-          <button class="register-button">Registro</button>
-          <div class="dropdown-content">
-            <a href="#">Usuario</a>
-            <a href="#">Empresa</a>
+  <div>
+    <header>
+      <div class="header-content">
+        <img class="logo" src="src/assets/logoblanco.png" alt="Logo" />
+        <div class="buttons">
+          <button>Iniciar Sesión</button>
+          <div class="dropdown">
+            <button>Registro</button>
+            <div class="dropdown-content">
+              <a href="#">Usuario</a>
+              <a href="#">Empresa</a>
+            </div>
           </div>
+          <button>Mi perfil</button>
         </div>
-        <input type="text" class="search-bar" placeholder="Buscar" />
       </div>
     </header>
-    <div v-if="ofertas.length > 0" class="ofertas-section">
-      <h2 class="ofertas-title">Ofertas disponibles</h2>
-      <ul>
-        <li v-for="oferta in ofertas" :key="oferta.idOferta">
-          <div class="oferta-details">
-            <div class="oferta-puesto">
-              <strong>Puesto:</strong> {{ oferta.puesto }}
-            </div>
-            <div class="oferta-empresa">
-              <strong>Empresa:</strong> {{ oferta.empresa.nombre }}
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <footer class="footer">
-      <div class="footer-content">
-        <p class="rights">Jobsite Todos los Derechos Reservados</p>
-        <div class="footer-buttons">
-          <button class="contact-button">CONTACTO</button>
-          <button class="support-button">SOPORTE</button>
-          <button class="privacy-button">Condiciones de Privacidad</button>
+    <div class="divider"></div>
+
+    <div class="body">
+      <section class="section section1">
+        <div class="title">Jobsite, conectando talento</div>
+        <div class="subtitle">¿Qué buscas?</div>
+        <div class="buttons-wrapper">
+          <button class="button left-button">Trabajo</button>
+          <button class="button right-button">Talento</button>
         </div>
-      </div>
+      </section>
+
+      <section class="section section2">
+        <button class="button button1">PRÁCTICAS</button>
+        <button class="button button2">ANALISTAS & SENIORS</button>
+        <button class="button button3">DIRECTIVOS</button>
+      </section>
+      <section class="section section3">
+        <h1>Estas empresas buscan y consiguen talento en Jobsite</h1>
+        <div class="carousel">
+          <img src="src/assets/emp1.jpeg" alt="Empresa 1">
+          <img src="src/assets/emp2.jpeg" alt="Empresa 2">
+          <img src="src/assets/emp3.png" alt="Empresa 3">
+          <img src="src/assets/emp4.png" alt="Empresa 4">
+        </div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <button class="footer-button">Política de Privacidad</button>
+      <button class="footer-button">Desarrollado por Grupo3 Esan Company</button>
+      <button class="footer-button">Las fijas del final</button>
     </footer>
   </div>
 </template>
@@ -72,125 +80,199 @@ export default {
 };
 </script>
 
+
 <style scoped>
-.home-page {
+.header-content {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.header {
-  display: flex;
-  align-items: center;
   justify-content: space-between;
-  width: 100%;
-  background-color: #004aad;
-  padding: 20px;
-  color: white;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
 }
 
-.logo img {
-  width: 50px;
+.logo {
+  margin-left: 10px;
   height: 50px;
+  width: 120px;
 }
 
 .buttons {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
-.enter-button {
-  background-color: white;
-  border: 1px solid #0079c2;
-  color: #0079c2;
+.buttons button {
+  background-color: #fff;
+  color: #004aad;
+  border: 2px solid #004aad;
   padding: 10px 20px;
-  margin-right: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.register-button {
-  background-color: #0079c2;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  margin-right: 10px;
+.buttons button:hover {
+  background-color: #004aad;
+  color: #fff;
 }
 
 .dropdown {
   position: relative;
-  display: inline-block;
 }
 
 .dropdown-content {
-  display: none;
   position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  top: 100%;
+  left: 0;
   z-index: 1;
+  display: none;
+  background-color: #fff;
+  border: 2px solid #004aad;
+  padding: 10px;
 }
 
 .dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
   display: block;
+  padding: 5px 10px;
+  color: #004aad;
+  cursor: pointer;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-.search-bar {
-  border: none;
-  padding: 8px;
-  background-color: #f9f9f9;
-  margin-left: 10px;
+.divider {
+  height: 1px;
+  background-color: #004aad;
 }
 
-
-.ofertas-section {
-  width: 100%;
-  height: 300px;
-  overflow-y: auto;
-  background-color: #004aad;
-  color: white;
+.body {
   padding: 20px;
 }
 
-.ofertas-title {
-  font-size: 24px;
-  margin-bottom: 10px;
+.section {
+  margin-bottom: 20px;
 }
 
-.oferta-details {
-  margin-bottom: 15px;
+.section1 {
+  background-image: url('src/assets/logohome1.png');
+  background-size: cover;
+  padding: 20px;
+  color: #004aad;
+  height: 300px;
 }
 
-.oferta-puesto,
-.oferta-empresa {
+
+.title {
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.subtitle {
+  font-size: 25px;
+  color: #000;
+  margin-top: 10px;
+}
+
+.buttons-wrapper {
+  display: flex;
+  justify-content: 20px;
+  margin-top: 20px;
+  height: 30px;
+  width: 30px;
+}
+
+.left-button,
+.right-button {
+  background-color: #004aad;
+  color: #fff;
+  padding: 40px 100px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.section2 {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.button {
+  flex: 1;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
   font-size: 16px;
+  color: #fff;
+}
+
+.button1 {
+  background-image: url('src/assets/botonhome1.png');
+  padding: 80px;
+  color: #052e63;
+}
+
+.button2 {
+  background-image: url('src/assets/botonhome222.png');
+  padding: 80px;
+  color: #052e63;
+
+}
+
+.button3 {
+  background-image: url('src/assets/botonhome33.png');
+  padding: 80px;
+  color: #052e63;
+}
+
+.section3 {
+  background-color: #004aad;
+  text-align: center;
+  padding: 50px 0;
+}
+
+.section3 h1 {
+  color: #fff;
+  font-size: 40px;
+}
+
+.carousel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.carousel img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin: 10px;
 }
 
 .footer {
-  background-color: #004aad;
+  background-color: #fff;
   padding: 20px;
-  color: white;
-  margin-top: 50px;
-}
-
-.footer-content {
   display: flex;
-  align-items: center;
   justify-content: space-between;
 }
 
-.footer-buttons button {
-  background-color: transparent;
+.footer-button {
+  color: #004aad;
   border: none;
-  color: white;
-  padding: 0 10px;
-  margin-right: 10px;
+  background-color: transparent;
+  cursor: pointer;
 }
 </style>

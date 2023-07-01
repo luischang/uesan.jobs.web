@@ -2,66 +2,22 @@
   <div class="create-offer-form">
     <h2 class="form-title">Crear Oferta</h2>
 
-    <q-input
-      outlined
-      v-model="oferta.puesto"
-      label="Puesto"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="oferta.descripcion"
-      label="Descripción"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="oferta.requisitos"
-      label="Requisitos"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="oferta.certificados"
-      label="Certificados"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="oferta.funciones"
-      label="Funciones"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="oferta.ubicacion"
-      label="Ubicación"
-      class="form-input"
-    ></q-input>
-    <q-select
-      outlined
-      v-model="oferta.modalidad"
-      label="Modalidad"
-      :options="modalidades"
-      class="form-input"
-    ></q-select>
+
+    <q-input outlined v-model="oferta.puesto" label="Puesto" class="form-input"></q-input>
+    <q-input outlined v-model="oferta.descripcion" label="Descripción" class="form-input"></q-input>
+    <q-input outlined v-model="oferta.requisitos" label="Requisitos" class="form-input"></q-input>
+    <q-input outlined v-model="oferta.certificados" label="Certificados" class="form-input"></q-input>
+    <q-input outlined v-model="oferta.funciones" label="Funciones" class="form-input"></q-input>
+    <q-input outlined v-model="oferta.ubicacion" label="Ubicación" class="form-input"></q-input>
+    <q-select outlined v-model="oferta.modalidad" label="Modalidad" :options="modalidades" class="form-input"></q-select>
 
     <div class="form-actions">
-      <q-btn
-        color="primary"
-        label="Crear"
-        @click="createOffer"
-        class="form-btn"
-      ></q-btn>
-      <q-btn
-        color="negative"
-        label="Cancelar"
-        @click="cancel"
-        class="form-btn"
-      ></q-btn>
+      <q-btn color="primary" label="Crear" @click="createOffer" class="form-btn"></q-btn>
+      <q-btn color="negative" label="Cancelar" @click="cancel" class="form-btn"></q-btn>
     </div>
   </div>
 </template>
+
 
 <script>
 import axios from "axios";
