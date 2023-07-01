@@ -71,6 +71,17 @@ export default {
           idPostulante: this.idPostulante,
         }));
 
+      if (competenciasSeleccionadas.length === 0) {
+        // No hay competencias seleccionadas, no se realiza ningún registro
+        this.$router.push("/home");
+        this.$q.notify({
+          message: "No hay competencias seleccionadas",
+          color: "warning",
+          position: "bottom",
+          timeout: 3000,
+        });
+        return; // Salir del método
+      }
       competenciasSeleccionadas.forEach((competencia) => {
         axios
           .post(url, competencia)
