@@ -2,10 +2,6 @@
   <div class="create-offer-form">
     <h2 class="form-title">Crear Oferta</h2>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9b5f2853b5ae20718b9e9dc3f842b85fa85ddb1b
     <q-input outlined v-model="oferta.puesto" label="Puesto" class="form-input"></q-input>
     <q-input outlined v-model="oferta.descripcion" label="Descripción" class="form-input"></q-input>
     <q-input outlined v-model="oferta.requisitos" label="Requisitos" class="form-input"></q-input>
@@ -15,16 +11,11 @@
     <q-select outlined v-model="oferta.modalidad" label="Modalidad" :options="modalidades" class="form-input"></q-select>
 
     <div class="form-actions">
-<<<<<<< HEAD
-      <q-btn color="primary" label="Crear" @click="createOffer" class="form-btn"></q-btn>
-=======
       <q-btn color="primary" label="Crear" @click="createOffer" :disable="disableCreateButton" class="form-btn"></q-btn>
->>>>>>> 9b5f2853b5ae20718b9e9dc3f842b85fa85ddb1b
       <q-btn color="negative" label="Cancelar" @click="cancel" class="form-btn"></q-btn>
     </div>
   </div>
 </template>
-
 
 <script>
 import axios from "axios";
