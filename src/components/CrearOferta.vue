@@ -2,63 +2,17 @@
   <div class="create-offer-form">
     <h2 class="form-title">Crear Oferta</h2>
 
-    <q-input
-      outlined
-      v-model="oferta.puesto"
-      label="Puesto"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="oferta.descripcion"
-      label="Descripción"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="oferta.requisitos"
-      label="Requisitos"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="oferta.certificados"
-      label="Certificados"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="oferta.funciones"
-      label="Funciones"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="oferta.ubicacion"
-      label="Ubicación"
-      class="form-input"
-    ></q-input>
-    <q-select
-      outlined
-      v-model="oferta.modalidad"
-      label="Modalidad"
-      :options="modalidades"
-      class="form-input"
-    ></q-select>
+    <q-input outlined v-model="oferta.puesto" label="Puesto" class="form-input"></q-input>
+    <q-input outlined v-model="oferta.descripcion" label="Descripción" class="form-input"></q-input>
+    <q-input outlined v-model="oferta.requisitos" label="Requisitos" class="form-input"></q-input>
+    <q-input outlined v-model="oferta.certificados" label="Certificados" class="form-input"></q-input>
+    <q-input outlined v-model="oferta.funciones" label="Funciones" class="form-input"></q-input>
+    <q-input outlined v-model="oferta.ubicacion" label="Ubicación" class="form-input"></q-input>
+    <q-select outlined v-model="oferta.modalidad" label="Modalidad" :options="modalidades" class="form-input"></q-select>
 
     <div class="form-actions">
-      <q-btn
-        color="primary"
-        label="Crear"
-        @click="createOffer"
-        class="form-btn"
-      ></q-btn>
-      <q-btn
-        color="negative"
-        label="Cancelar"
-        @click="cancel"
-        class="form-btn"
-      ></q-btn>
+      <q-btn color="primary" label="Crear" @click="createOffer" :disable="disableCreateButton" class="form-btn"></q-btn>
+      <q-btn color="negative" label="Cancelar" @click="cancel" class="form-btn"></q-btn>
     </div>
   </div>
 </template>
@@ -82,7 +36,8 @@ export default {
           idEmpresa: 0,
         },
       },
-      modalidades: ["Remoto", "Presencial", "Híbrido"],
+      modalidades: ["Virtual", "Presencial"],
+      disableCreateButton: false,
     };
   },
   created() {
@@ -122,10 +77,22 @@ export default {
     },
 
     createOffer() {
+      if (this.checkEmptyFields()) {
+        this.$q.notify({
+          message: "Por favor, complete todos los campos.",
+          color: "negative",
+          position: "top",
+          timeout: 3000,
+        });
+        return;
+      }
+
       if (localStorage.getItem("ofertaCreada")) {
         localStorage.removeItem("ofertaCreada");
       }
       const url = "http://localhost:5158/api/Oferta/CreateOferta";
+
+      this.disableCreateButton = true; // Disable the create button while the request is being made
 
       axios
         .post(url, this.oferta)
@@ -148,6 +115,9 @@ export default {
             position: "top",
             timeout: 3000,
           });
+        })
+        .finally(() => {
+          this.disableCreateButton = false; // Re-enable the create button after the request is completed
         });
     },
     cancel() {
@@ -162,6 +132,26 @@ export default {
       this.oferta.ubicacion = "";
       this.oferta.modalidad = "";
       this.oferta.empresa.idEmpresa = this.getEmpresa();
+    },
+    checkEmptyFields() {
+      const {
+        puesto,
+        descripcion,
+        requisitos,
+        certificados,
+        funciones,
+        ubicacion,
+        modalidad,
+      } = this.oferta;
+      return (
+        puesto === "" ||
+        descripcion === "" ||
+        requisitos === "" ||
+        certificados === "" ||
+        funciones === "" ||
+        ubicacion === "" ||
+        modalidad === ""
+      );
     },
   },
 };

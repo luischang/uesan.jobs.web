@@ -3,59 +3,20 @@
     <h2 class="form-title">Registro de Postulante</h2>
 
     <h3 class="form-subtitle">Datos de Usuario</h3>
-    <q-input
-      outlined
-      v-model="postulante.usuarioInsert.correo"
-      label="Email"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="postulante.usuarioInsert.password"
-      label="Contraseña"
-      type="password"
-      class="form-input"
-    ></q-input>
+    <q-input outlined v-model="postulante.usuarioInsert.correo" label="Email" class="form-input"></q-input>
+    <q-input outlined v-model="postulante.usuarioInsert.password" label="Contraseña" type="password"
+      class="form-input"></q-input>
 
     <h3 class="form-subtitle">Datos de Postulante</h3>
-    <q-input
-      outlined
-      v-model="postulante.nombre"
-      label="Nombre"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="postulante.dni"
-      label="DNI"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="postulante.telefono"
-      label="Teléfono"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="postulante.direccion"
-      label="Dirección"
-      class="form-input"
-    ></q-input>
+    <q-input outlined v-model="postulante.nombre" label="Nombre" class="form-input"></q-input>
+    <q-input outlined v-model="postulante.dni" label="DNI" class="form-input"></q-input>
+    <q-input outlined v-model="postulante.telefono" label="Teléfono" class="form-input"></q-input>
+    <q-input outlined v-model="postulante.direccion" label="Dirección" class="form-input"></q-input>
 
     <div class="form-actions">
-      <q-btn
-        color="primary"
-        label="Registrar"
-        @click="register"
-        class="form-btn"
-      ></q-btn>
-      <q-btn
-        color="negative"
-        label="Cancelar"
-        @click="cancel"
-        class="form-btn"
-      ></q-btn>
+      <q-btn color="primary" label="Registrar" @click="register" :disable="disableRegisterButton"
+        class="form-btn"></q-btn>
+      <q-btn color="negative" label="Cancelar" @click="cancel" class="form-btn"></q-btn>
     </div>
   </div>
 </template>
@@ -77,10 +38,21 @@ export default {
         telefono: "",
         direccion: "",
       },
+      disableRegisterButton: false,
     };
   },
   methods: {
     register() {
+      if (this.checkEmptyFields()) {
+        this.$q.notify({
+          message: "Por favor, complete todos los campos.",
+          color: "negative",
+          position: "top",
+          timeout: 3000,
+        });
+        return;
+      }
+
       if (localStorage.getItem("postulanteCreado")) {
         localStorage.removeItem("postulanteCreado");
       }
@@ -114,6 +86,10 @@ export default {
       this.postulante.direccion = "";
       this.postulante.dni = "";
       this.postulante.telefono = "";
+    },
+    checkEmptyFields() {
+      const { correo, password, nombre, direccion, dni, telefono } = this.postulante;
+      return correo === "" || password === "" || nombre === "" || direccion === "" || dni === "" || telefono === "";
     },
   },
 };

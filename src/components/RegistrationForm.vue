@@ -3,59 +3,20 @@
     <h2 class="form-title">Registro de Empresa</h2>
 
     <h3 class="form-subtitle">Datos de Usuario</h3>
-    <q-input
-      outlined
-      v-model="empresa.usuarioInsert.correo"
-      label="Email"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="empresa.usuarioInsert.password"
-      label="Contraseña"
-      type="password"
-      class="form-input"
-    ></q-input>
+    <q-input outlined v-model="empresa.usuarioInsert.correo" label="Email" class="form-input"></q-input>
+    <q-input outlined v-model="empresa.usuarioInsert.password" label="Contraseña" type="password"
+      class="form-input"></q-input>
 
     <h3 class="form-subtitle">Datos de Empresa</h3>
-    <q-input
-      outlined
-      v-model="empresa.nombre"
-      label="Nombre"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="empresa.direccion"
-      label="Dirección"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="empresa.ruc"
-      label="RUC"
-      class="form-input"
-    ></q-input>
-    <q-input
-      outlined
-      v-model="empresa.telefono"
-      label="Teléfono"
-      class="form-input"
-    ></q-input>
+    <q-input outlined v-model="empresa.nombre" label="Nombre" class="form-input"></q-input>
+    <q-input outlined v-model="empresa.direccion" label="Dirección" class="form-input"></q-input>
+    <q-input outlined v-model="empresa.ruc" label="RUC" class="form-input"></q-input>
+    <q-input outlined v-model="empresa.telefono" label="Teléfono" class="form-input"></q-input>
 
     <div class="form-actions">
-      <q-btn
-        color="primary"
-        label="Registrar"
-        @click="register"
-        class="form-btn"
-      ></q-btn>
-      <q-btn
-        color="negative"
-        label="Cancelar"
-        @click="cancel"
-        class="form-btn"
-      ></q-btn>
+      <q-btn color="primary" label="Registrar" @click="register" :disable="disableRegisterButton"
+        class="form-btn"></q-btn>
+      <q-btn color="negative" label="Cancelar" @click="cancel" class="form-btn"></q-btn>
     </div>
   </div>
 </template>
@@ -77,10 +38,25 @@ export default {
         ruc: "",
         telefono: "",
       },
+      disableRegisterButton: false,
     };
   },
   methods: {
+    checkEmptyFields() {
+      const { correo, password, nombre, direccion, ruc, telefono } = this.empresa.usuarioInsert;
+      return correo === "" || password === "" || nombre === "" || direccion === "" || ruc === "" || telefono === "";
+    },
     register() {
+      if (this.checkEmptyFields()) {
+        this.$q.notify({
+          message: "Por favor, complete todos los campos.",
+          color: "negative",
+          position: "top",
+          timeout: 3000,
+        });
+        return;
+      }
+
       var url = "http://localhost:5158/api/Empresa/CreateEmpresa";
 
       axios
