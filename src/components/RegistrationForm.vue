@@ -30,13 +30,11 @@
       <q-input outlined v-model="empresa.telefono" label="Teléfono" class="form-input"></q-input>
 
       <div class="form-actions">
-        <button type="submit" class="button">Registrar</button>
-        <button type="button" class="button button-cancel">Cancelar</button>
+        <q-btn color="primary" label="Registrar" @click="register" class="form-btn"></q-btn>
+        <q-btn color="negative" label="Cancelar" @click="cancel" class="form-btn"></q-btn>
       </div>
 
     </div>
-
-  </div>
 </template>
 
 <script>
@@ -56,10 +54,25 @@ export default {
         ruc: "",
         telefono: "",
       },
+      disableRegisterButton: false,
     };
   },
   methods: {
+    checkEmptyFields() {
+      const { correo, password, nombre, direccion, ruc, telefono } = this.empresa.usuarioInsert;
+      return correo === "" || password === "" || nombre === "" || direccion === "" || ruc === "" || telefono === "";
+    },
     register() {
+      if (this.checkEmptyFields()) {
+        this.$q.notify({
+          message: "Por favor, complete todos los campos.",
+          color: "negative",
+          position: "top",
+          timeout: 3000,
+        });
+        return;
+      }
+
       var url = "http://localhost:5158/api/Empresa/CreateEmpresa";
 
       axios
@@ -85,15 +98,7 @@ export default {
         });
     },
     cancel() {
-      this.resetForm();
-    },
-    resetForm() {
-      this.empresa.usuarioInsert.correo = "";
-      this.empresa.usuarioInsert.password = "";
-      this.empresa.nombre = "";
-      this.empresa.direccion = "";
-      this.empresa.ruc = "";
-      this.empresa.telefono = "";
+      this.$router.push("/home");
     },
   },
 };

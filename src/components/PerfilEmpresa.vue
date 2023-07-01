@@ -10,21 +10,23 @@
       </div>
     </div>
     <div class="botones-container">
-      <q-btn
-        color="primary"
-        label="Regresar a inicio"
-        class="regresar-btn"
-        @click="regresar"
-      ></q-btn>
-
-      <q-btn
-        v-if="esEmpresaAutenticada"
-        color="primary"
-        label="Crear Oferta"
-        class="crear-oferta-btn"
-        @click="crearOferta"
-      ></q-btn>
+      <q-btn color="primary" label="Regresar a inicio" class="regresar-btn" @click="regresar"></q-btn>
+      <q-btn v-if="esEmpresaAutenticada" color="primary" label="Crear Oferta" class="crear-oferta-btn"
+        @click="crearOferta"></q-btn>
     </div>
+    <div class="ofertas-container">
+      <h3>Ofertas de la empresa:</h3>
+      <div class="ofertas-list" v-if="ofertas.length > 0">
+        <div class="oferta-item" v-for="oferta in ofertas" :key="oferta.idOferta">
+          <h4>{{ oferta.puesto }}</h4>
+          <p><strong>Descripción: </strong>{{ oferta.descripcion }}</p>
+          <q-btn color="primary" label="Ver más" class="ver-mas-btn" @click="verDetalles(oferta.idOferta)"></q-btn>
+        </div>
+      </div>
+      <p v-else>No se encontraron ofertas.</p>
+    </div>
+
+
   </div>
 </template>
 
@@ -36,21 +38,18 @@ export default {
   data() {
     return {
       empresa: null,
+      ofertas: [] // Agregamos la propiedad para almacenar las ofertas de la empresa
     };
   },
   created() {
     const id = this.$route.params.id;
     this.obtenerDatosEmpresa(id);
+    this.obtenerOfertasEmpresa(id); // Llamamos a la función para obtener las ofertas de la empresa
   },
   computed: {
     esEmpresaAutenticada() {
-      const empresaAutenticada = JSON.parse(
-        localStorage.getItem("empresaAutenticada")
-      );
-
-      const empresaAutenticadaId = empresaAutenticada
-        ? empresaAutenticada.idEmpresa.toString()
-        : null;
+      const empresaAutenticada = JSON.parse(localStorage.getItem("empresaAutenticada"));
+      const empresaAutenticadaId = empresaAutenticada ? empresaAutenticada.idEmpresa.toString() : null;
       return empresaAutenticadaId === this.$route.params.id;
     },
   },
@@ -63,9 +62,16 @@ export default {
         })
         .catch((error) => {
           console.error("Error al obtener los datos de la empresa:", error);
+        });
+    },
+    obtenerOfertasEmpresa(id) {
+      axios
+        .get(`http://localhost:5158/api/Oferta/${id}/GetByEmpresa`)
+        .then((response) => {
+          this.ofertas = response.data;
         })
-        .finally(() => {
-          this.mostrarPerfilEmpresa = true; // Marcamos que se han obtenido los datos de la empresa
+        .catch((error) => {
+          console.error("Error al obtener las ofertas de la empresa:", error);
         });
     },
     regresar() {
@@ -73,6 +79,9 @@ export default {
     },
     crearOferta() {
       this.$router.push("/crearOferta");
+    },
+    verDetalles(idOferta) {
+      this.$router.push(`/OfertaPostular/${idOferta}`);
     },
   },
 };
@@ -109,9 +118,33 @@ export default {
   margin-top: 20px;
   margin-left: 10px;
 }
+
 .botones-container {
   display: flex;
   justify-content: center;
+}
+
+.ofertas-container {
+  background-color: #a1c5db;
+  margin-top: 40px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+
+.ofertas-list {
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+.oferta-item {
+  margin-bottom: 20px;
+}
+
+.ver-mas-btn {
+  margin-top: 10px;
 }
 
 /* Estilos de fuente atractivos */
@@ -119,6 +152,8 @@ export default {
 
 h1,
 h2,
+h3,
+h4,
 p,
 button {
   font-family: "Poppins", sans-serif;

@@ -1,38 +1,19 @@
 <template>
   <div class="login-container">
-    <img
-      src="src/assets/jobsitelogo.png"
-      class="login-logo"
-      @click="goToHome"
-      alt="Logo"
-    />
+    <img src="src/assets/jobsitelogo.png" class="login-logo" @click="goToHome" alt="Logo" />
 
     <div class="input-container">
-      <input
-        v-model="email"
-        type="text"
-        placeholder="Correo electrónico"
-        class="login-input"
-      />
+      <input v-model="email" type="text" placeholder="Correo electrónico" class="login-input" />
     </div>
 
     <div class="input-container">
-      <input
-        v-model="password"
-        type="password"
-        placeholder="Contraseña"
-        class="login-input"
-      />
+      <input v-model="password" type="password" placeholder="Contraseña" class="login-input" />
     </div>
 
-    <q-btn
-      color="white"
-      text-color="blue"
-      class="login-button"
-      :class="{ hovered: isButtonHovered }"
-      label="LOG IN"
-      @click="login"
-    ></q-btn>
+    <q-btn color="white" text-color="blue" class="login-button" :class="{ hovered: isButtonHovered }" label="LOG IN"
+      @click="login"></q-btn>
+
+    <q-btn color="white" text-color="red" class="logout-button" label="Salir" @click="logout"></q-btn>
 
     <button @click="goRegistrationPostulante" class="register-button">
       ¿Busca trabajo? ¡Regístrese como postulante!
@@ -103,17 +84,50 @@ export default {
           } else if (usuario && usuario.tipo === "admin") {
             localStorage.setItem("adminAutenticado", JSON.stringify(usuario));
             this.$router.push("/admin");
-          }
+          };
+          this.$q.notify({
+            message: "Inicio de sesión exitoso",
+            color: "positive",
+            position: "bottom",
+            timeout: 3000,
+          })
         })
         .catch((error) => {
           console.error("Error de inicio de sesión:", error);
+          this.$q.notify({
+            message: "Correo y/o contraseña incorrectos",
+            color: "negative",
+            position: "bottom",
+            timeout: 3000,
+          })
         });
     },
+    logout() {
+      // Eliminar datos de autenticación almacenados en localStorage
+      localStorage.removeItem("postulanteAutenticado");
+      localStorage.removeItem("empresaAutenticada");
+      localStorage.removeItem("adminAutenticado");
+
+      // Redireccionar a la página Home
+      this.$router.push("/home");
+    }
   },
 };
 </script>
 
 <style scoped>
+.logout-button {
+  margin-top: 25px;
+  background-color: white;
+  color: red;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.logout-button.hovered {
+  background-color: red;
+  color: white;
+}
+
 .login-container {
   display: flex;
   flex-direction: column;
