@@ -2,28 +2,14 @@
   <div class="postulante-competencias">
     <h2>Inserte sus competencias</h2>
 
-    <q-input
-      outlined
-      v-model="buscarCompetencia"
-      label="Buscar competencia"
-      class="form-input"
-    ></q-input>
+    <q-input outlined v-model="buscarCompetencia" label="Buscar competencia" class="form-input"></q-input>
 
-    <div
-      v-for="competencia in competenciasFiltradas"
-      :key="competencia.idCompetencia"
-    >
-      <q-checkbox
-        v-model="competenciaSeleccionada[competencia.idCompetencia]"
-        :label="competencia.descripcion"
-      ></q-checkbox>
+    <div v-for="competencia in competenciasFiltradas" :key="competencia.idCompetencia">
+      <q-checkbox v-model="competenciaSeleccionada[competencia.idCompetencia]"
+        :label="competencia.descripcion"></q-checkbox>
     </div>
 
-    <q-btn
-      label="Registrar competencias"
-      color="primary"
-      @click="registrarCompetencias"
-    ></q-btn>
+    <q-btn label="Registrar competencias" color="primary" @click="registrarCompetencias"></q-btn>
   </div>
 </template>
 
@@ -92,7 +78,7 @@ export default {
             console.log("Competencia registrada:", response.data);
             this.$router.push("/home");
             this.$q.notify({
-              message: "Competencias registradas con éxito",
+              message: "Usuario registrado con éxito",
               color: "positive",
               position: "bottom",
               timeout: 3000,
