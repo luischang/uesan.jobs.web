@@ -1,49 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div>
-    <header>
-      <div class="header-content">
-        <img class="logo" src="src/assets/logoblanco.png" alt="Logo" />
-        <div class="buttons">
-          <button>Iniciar Sesión</button>
-          <div class="dropdown">
-            <button>Registro</button>
-            <div class="dropdown-content">
-              <a href="#">Usuario</a>
-              <a href="#">Empresa</a>
-            </div>
-          </div>
-          <button>Mi perfil</button>
-        </div>
-      </div>
-    </header>
-    <div class="divider"></div>
-
-    <div class="body">
-      <section class="section section1">
-        <div class="title">Jobsite, conectando talento</div>
-        <div class="subtitle">¿Qué buscas?</div>
-        <div class="buttons-wrapper">
-          <button class="button left-button">Trabajo</button>
-          <button class="button right-button">Talento</button>
-        </div>
-      </section>
-
-      <section class="section section2">
-        <button class="button button1">PRÁCTICAS</button>
-        <button class="button button2">ANALISTAS & SENIORS</button>
-        <button class="button button3">DIRECTIVOS</button>
-      </section>
-      <section class="section section3">
-        <h1>Estas empresas buscan y consiguen talento en Jobsite</h1>
-        <div class="carousel">
-          <img src="src/assets/emp1.jpeg" alt="Empresa 1">
-          <img src="src/assets/emp2.jpeg" alt="Empresa 2">
-          <img src="src/assets/emp3.png" alt="Empresa 3">
-          <img src="src/assets/emp4.png" alt="Empresa 4">
-        </div>
-      </section>
-=======
   <div class="home-page">
     <header class="header">
       <div class="logo">
@@ -146,13 +101,16 @@
         </router-link>
 
       </div>
->>>>>>> 9b5f2853b5ae20718b9e9dc3f842b85fa85ddb1b
     </div>
-
     <footer class="footer">
-      <button class="footer-button">Política de Privacidad</button>
-      <button class="footer-button">Desarrollado por Grupo3 Esan Company</button>
-      <button class="footer-button">Las fijas del final</button>
+      <div class="footer-content">
+        <p class="rights">Jobsite Todos los Derechos Reservados</p>
+        <div class="footer-buttons">
+          <button class="contact-button">CONTACTO</button>
+          <button class="support-button">SOPORTE</button>
+          <button class="privacy-button">Condiciones de Privacidad</button>
+        </div>
+      </div>
     </footer>
   </div>
 </template>
@@ -273,90 +231,84 @@ export default {
 
 </script>
 
-
 <style scoped>
-.header-content {
+.home-page {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 10px;
-  background-color: #fff;
+  justify-content: center;
+  height: 100vh;
 }
 
-.logo {
-  margin-left: 10px;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #004aad;
+  padding: 20px;
+  color: white;
+}
+
+.logo img {
+  width: 50px;
   height: 50px;
-  width: 120px;
 }
 
 .buttons {
   display: flex;
   align-items: center;
-  margin-left: auto;
 }
 
-.buttons button {
-  background-color: #fff;
-  color: #004aad;
-  border: 2px solid #004aad;
+.enter-button {
+  background-color: white;
+  border: 1px solid #0079c2;
+  color: #0079c2;
   padding: 10px 20px;
-  margin-left: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+  margin-right: 10px;
 }
 
-.buttons button:hover {
-  background-color: #004aad;
-  color: #fff;
+.register-button {
+  background-color: #0079c2;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  margin-right: 10px;
 }
 
 .dropdown {
   position: relative;
+  display: inline-block;
 }
 
 .dropdown-content {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1;
   display: none;
-  background-color: #fff;
-  border: 2px solid #004aad;
-  padding: 10px;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 .dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
   display: block;
-  padding: 5px 10px;
-  color: #004aad;
-  cursor: pointer;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-.divider {
-  height: 1px;
-  background-color: #004aad;
+.search-bar {
+  border: none;
+  padding: 8px;
+  background-color: #f9f9f9;
+  margin-left: 10px;
 }
 
-.body {
-  padding: 20px;
-}
 
-<<<<<<< HEAD
-.section {
-  margin-bottom: 20px;
-}
-
-.section1 {
-  background-image: url('src/assets/logohome1.png');
-  background-size: cover;
-  padding: 20px;
-  color: #004aad;
-  height: 300px;
-=======
 .ofertas-section {
   width: 100%;
   height: 300px;
@@ -366,119 +318,41 @@ export default {
   color: white;
   padding: 20px;
   grid-column: 2;
->>>>>>> 9b5f2853b5ae20718b9e9dc3f842b85fa85ddb1b
 }
 
-
-.title {
-  font-size: 40px;
-  font-weight: bold;
-  margin-top: 20px;
+.ofertas-title {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-.subtitle {
-  font-size: 25px;
-  color: #000;
-  margin-top: 10px;
+.oferta-details {
+  margin-bottom: 15px;
 }
 
-.buttons-wrapper {
-  display: flex;
-  justify-content: 20px;
-  margin-top: 20px;
-  height: 30px;
-  width: 30px;
-}
-
-.left-button,
-.right-button {
-  background-color: #004aad;
-  color: #fff;
-  padding: 40px 100px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-left: 15px;
-}
-
-.section2 {
-  background-color: #fff;
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-}
-
-.button {
-  flex: 1;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
+.oferta-puesto,
+.oferta-empresa {
   font-size: 16px;
-  color: #fff;
-}
-
-.button1 {
-  background-image: url('src/assets/botonhome1.png');
-  padding: 80px;
-  color: #052e63;
-}
-
-.button2 {
-  background-image: url('src/assets/botonhome222.png');
-  padding: 80px;
-  color: #052e63;
-
-}
-
-.button3 {
-  background-image: url('src/assets/botonhome33.png');
-  padding: 80px;
-  color: #052e63;
-}
-
-.section3 {
-  background-color: #004aad;
-  text-align: center;
-  padding: 50px 0;
-}
-
-.section3 h1 {
-  color: #fff;
-  font-size: 40px;
-}
-
-.carousel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 30px;
-}
-
-.carousel img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  margin: 10px;
 }
 
 .footer {
-  background-color: #fff;
+  background-color: #004aad;
   padding: 20px;
+  color: white;
+  margin-top: 50px;
+}
+
+.footer-content {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
-.footer-button {
-  color: #004aad;
-  border: none;
+.footer-buttons button {
   background-color: transparent;
-  cursor: pointer;
+  border: none;
+  color: white;
+  padding: 0 10px;
+  margin-right: 10px;
 }
 
 

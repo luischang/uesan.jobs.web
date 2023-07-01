@@ -1,40 +1,24 @@
 <template>
-  <div class="registration-page">
-    <header class="header">
-      <div class="logo">
-        <a href="http://localhost:9000/#/Home">
-          <img src="src/assets/textlogo.png" alt="Logo" class="logo-image" />
-        </a>
-      </div>
-      <div class="header-buttons">
-        <button class="button">Login</button>
-        <div class="search-bar">
-          <input type="text" class="search-input" placeholder="Buscar" />
-          <i class="search-icon"></i>
-        </div>
-      </div>
-    </header>
-    <div class="registration-form">
+  <div class="registration-form">
+    <h2 class="form-title">Registro de Empresa</h2>
 
-      <h2 class="form-title">REGISTRO DE EMPRESA</h2>
+    <h3 class="form-subtitle">Datos de Usuario</h3>
+    <q-input outlined v-model="empresa.usuarioInsert.correo" label="Email" class="form-input"></q-input>
+    <q-input outlined v-model="empresa.usuarioInsert.password" label="Contraseña" type="password"
+      class="form-input"></q-input>
 
-      <h3 class="form-subtitle">Datos de Usuario</h3>
-      <q-input outlined v-model="empresa.usuarioInsert.correo" label="Email" class="form-input"></q-input>
-      <q-input outlined v-model="empresa.usuarioInsert.password" label="Contraseña" type="password"
-        class="form-input"></q-input>
+    <h3 class="form-subtitle">Datos de Empresa</h3>
+    <q-input outlined v-model="empresa.nombre" label="Nombre" class="form-input"></q-input>
+    <q-input outlined v-model="empresa.direccion" label="Dirección" class="form-input"></q-input>
+    <q-input outlined v-model="empresa.ruc" label="RUC" class="form-input"></q-input>
+    <q-input outlined v-model="empresa.telefono" label="Teléfono" class="form-input"></q-input>
 
-      <h3 class="form-subtitle">Datos de Empresa</h3>
-      <q-input outlined v-model="empresa.nombre" label="Nombre" class="form-input"></q-input>
-      <q-input outlined v-model="empresa.direccion" label="Dirección" class="form-input"></q-input>
-      <q-input outlined v-model="empresa.ruc" label="RUC" class="form-input"></q-input>
-      <q-input outlined v-model="empresa.telefono" label="Teléfono" class="form-input"></q-input>
-
-      <div class="form-actions">
-        <q-btn color="primary" label="Registrar" @click="register" class="form-btn"></q-btn>
-        <q-btn color="negative" label="Cancelar" @click="cancel" class="form-btn"></q-btn>
-      </div>
-
+    <div class="form-actions">
+      <q-btn color="primary" label="Registrar" @click="register" :disable="disableRegisterButton"
+        class="form-btn"></q-btn>
+      <q-btn color="negative" label="Cancelar" @click="cancel" class="form-btn"></q-btn>
     </div>
+  </div>
 </template>
 
 <script>
@@ -105,72 +89,6 @@ export default {
 </script>
 
 <style scoped>
-.registration-page {
-  background-color: #004aad;
-  padding: 40px;
-  color: white;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 60px;
-  background-color: #004aad;
-  height: 60px;
-}
-
-.logo {
-  display: flex;
-  align-items: left;
-}
-
-.logo-image {
-  width: 110px;
-  height: 60px;
-  margin-right: 50px;
-
-}
-
-.logo-text {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.header-buttons {
-  display: flex;
-  align-items: center;
-  padding-left: 400px;
-}
-
-.button {}
-
-.search-bar {
-  position: relative;
-  padding: 20px;
-}
-
-.search-input {
-  width: 200px;
-  padding: 8px;
-  font-size: 16px;
-  border-radius: 4px;
-  border: none;
-  outline: none;
-}
-
-.search-icon {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  background-image: url(src/assets/search_icon.png);
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
 .registration-form {
   max-width: 400px;
   margin: 0 auto;
@@ -202,12 +120,6 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-}
-
-.button-cancel {
-  background-color: transparent;
-  color: #8e0000;
-  margin-left: 10px;
 }
 
 .form-btn {
