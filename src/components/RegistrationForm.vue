@@ -82,15 +82,7 @@ export default {
         });
     },
     cancel() {
-      this.resetForm();
-    },
-    resetForm() {
-      this.empresa.usuarioInsert.correo = "";
-      this.empresa.usuarioInsert.password = "";
-      this.empresa.nombre = "";
-      this.empresa.direccion = "";
-      this.empresa.ruc = "";
-      this.empresa.telefono = "";
+      this.$router.push("/home");
     },
   },
 };

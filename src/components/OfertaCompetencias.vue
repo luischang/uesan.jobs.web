@@ -2,28 +2,14 @@
   <div class="oferta-competencias">
     <h2>Inserte las competencias necesarias para la oferta</h2>
 
-    <q-input
-      outlined
-      v-model="buscarCompetencia"
-      label="Buscar competencia"
-      class="form-input"
-    ></q-input>
+    <q-input outlined v-model="buscarCompetencia" label="Buscar competencia" class="form-input"></q-input>
 
-    <div
-      v-for="competencia in competenciasFiltradas"
-      :key="competencia.idCompetencia"
-    >
-      <q-checkbox
-        v-model="competenciaSeleccionada[competencia.idCompetencia]"
-        :label="competencia.descripcion"
-      ></q-checkbox>
+    <div v-for="competencia in competenciasFiltradas" :key="competencia.idCompetencia">
+      <q-checkbox v-model="competenciaSeleccionada[competencia.idCompetencia]"
+        :label="competencia.descripcion"></q-checkbox>
     </div>
 
-    <q-btn
-      label="Registrar competencias"
-      color="primary"
-      @click="registrarCompetencias"
-    ></q-btn>
+    <q-btn label="Registrar competencias" color="primary" @click="registrarCompetencias"></q-btn>
   </div>
 </template>
 
@@ -82,6 +68,19 @@ export default {
           idCompetencia: parseInt(idCompetencia),
           idOferta: this.idOferta,
         }));
+
+      if (competenciasSeleccionadas.length === 0) {
+        // No hay competencias seleccionadas, no se realiza ningún registro
+        this.$router.push("/home");
+        this.$q.notify({
+          message: "No hay competencias seleccionadas",
+          color: "warning",
+          position: "bottom",
+          timeout: 3000,
+        });
+        return; // Salir del método
+      }
+
 
       competenciasSeleccionadas.forEach((competencia) => {
         axios

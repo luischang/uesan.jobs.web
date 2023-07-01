@@ -13,6 +13,8 @@
     <q-btn color="white" text-color="blue" class="login-button" :class="{ hovered: isButtonHovered }" label="LOG IN"
       @click="login"></q-btn>
 
+    <q-btn color="white" text-color="red" class="logout-button" label="Salir" @click="logout"></q-btn>
+
     <button @click="goRegistrationPostulante" class="register-button">
       ¿Busca trabajo? ¡Regístrese como postulante!
     </button>
@@ -100,11 +102,32 @@ export default {
           })
         });
     },
+    logout() {
+      // Eliminar datos de autenticación almacenados en localStorage
+      localStorage.removeItem("postulanteAutenticado");
+      localStorage.removeItem("empresaAutenticada");
+      localStorage.removeItem("adminAutenticado");
+
+      // Redireccionar a la página Home
+      this.$router.push("/home");
+    }
   },
 };
 </script>
 
 <style scoped>
+.logout-button {
+  margin-top: 25px;
+  background-color: white;
+  color: red;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.logout-button.hovered {
+  background-color: red;
+  color: white;
+}
+
 .login-container {
   display: flex;
   flex-direction: column;

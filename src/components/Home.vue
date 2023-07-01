@@ -26,14 +26,15 @@
             </div>
           </div>
         </template>
-        <input type="text" class="search-bar" placeholder="Buscar" v-model="filtro" @input="fetchOfertas" />
+        <input type="text" class="search-bar" placeholder="Buscar" v-model="filtro"
+          @input="!empresaSeleccionada ? fetchOfertas() : filtrarPorEmpresa()" />
 
       </div>
     </header>
     <div class="ofertas-container">
       <div class="filtrar-empresa-section">
-        <label for="empresa-select">Filtrar por empresa:</label>
-        <select id="empresa-select" v-model="empresaSeleccionada" @change="filtrarPorEmpresa">
+        <label for="empresa-select" class="filter-label">Filtrar por empresa:</label>
+        <select id="empresa-select" v-model="empresaSeleccionada" @change="filtrarPorEmpresa" class="filter-select">
           <option value="">Todas las empresas</option>
           <option v-for="empresa in empresas" :key="empresa.idEmpresa">{{ empresa.nombre }}</option>
         </select>
@@ -130,11 +131,13 @@ export default {
     };
   },
   mounted() {
-    this.fetchOfertas();
+
     this.obtenerDatosAutenticados();
     this.fetchEmpresas();
+    this.fetchOfertas();
   },
   methods: {
+
     fetchEmpresas() {
       axios
         .get("http://localhost:5158/api/Empresa/GetAll")
@@ -156,16 +159,15 @@ export default {
           this.ofertas = ofertas.filter((oferta) =>
             oferta.puesto.toLowerCase().includes(this.filtro.toLowerCase())
           );
-          console.log(ofertas);
         })
         .catch((error) => {
           console.error("Error al obtener las ofertas:", error);
         });
     },
     filtrarPorEmpresa() {
-      this.ofertaSeleccionada = null;
+
       if (this.empresaSeleccionada) {
-        const empresa = this.empresas.find(empresa => empresa.nombre.toLowerCase() === this.empresaSeleccionada.toLowerCase());
+        const empresa = this.empresas.find(empresa => empresa.nombre.trim().toLowerCase() === this.empresaSeleccionada.trim().toLowerCase());
         if (empresa) {
           const empresaId = empresa.idEmpresa;
           axios.get(`http://localhost:5158/api/Oferta/${empresaId}/GetByEmpresa`)
@@ -223,7 +225,7 @@ export default {
         position: "bottom",
         timeout: 3000,
       });
-    }
+    },
   }
 };
 
@@ -365,7 +367,8 @@ export default {
 
 .detalle-oferta-section {
   width: 100%;
-  background-color: #f9f9f9;
+  background-color: #004aad;
+  color: white;
   padding: 20px;
   margin-top: 20px;
   display: flex;
@@ -442,5 +445,28 @@ export default {
   margin-top: 10px;
   cursor: pointer;
   align-self: flex-start;
+}
+
+.filter-label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.filter-select {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filtrar-empresa-section {
+  width: 100%;
+  height: 300px;
+  margin-top: 20px;
+  overflow-y: auto;
+  background-color: #004aad;
+  color: white;
+  padding: 20px;
+  grid-column: 1;
 }
 </style>

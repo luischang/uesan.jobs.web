@@ -77,16 +77,9 @@ export default {
         });
     },
     cancel() {
-      this.resetForm();
+      this.$router.push("/home");
     },
-    resetForm() {
-      this.postulante.usuarioInsert.correo = "";
-      this.postulante.usuarioInsert.password = "";
-      this.postulante.nombre = "";
-      this.postulante.direccion = "";
-      this.postulante.dni = "";
-      this.postulante.telefono = "";
-    },
+
     checkEmptyFields() {
       const { correo, password, nombre, direccion, dni, telefono } = this.postulante;
       return correo === "" || password === "" || nombre === "" || direccion === "" || dni === "" || telefono === "";
