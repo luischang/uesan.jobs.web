@@ -251,8 +251,8 @@ export default {
 }
 
 .logo img {
-  width: 50px;
-  height: 50px;
+  width: 170px;
+  height: 70px;
 }
 
 .buttons {
