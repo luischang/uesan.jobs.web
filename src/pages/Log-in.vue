@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <img src="src/assets/jobsitelogo.png" class="login-logo" @click="goToHome" alt="Logo" />
+    <img src="src/assets/LOGOCOMPLETO.png" class="login-logo" @click="goToHome" alt="Logo" />
 
     <div class="input-container">
       <input v-model="email" type="text" placeholder="Correo electrónico" class="login-input" />
@@ -118,6 +118,7 @@ export default {
 <style scoped>
 .logout-button {
   margin-top: 25px;
+  margin-bottom: 100px;
   background-color: white;
   color: red;
   transition: background-color 0.3s, color 0.3s;
@@ -134,12 +135,15 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #004aad;
+  background-image: url('src/assets/FONDOOK.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .login-logo {
-  width: 250px;
-  height: 150px;
+  width: 274px;
+  height: 92px;
   margin-bottom: 30px;
   cursor: pointer;
 }
@@ -181,6 +185,7 @@ export default {
   cursor: pointer;
   margin-bottom: 0rem;
   padding-bottom: 0rem;
-  margin-top: 1rem;
+  margin-top: 0rem;
 }
 </style>
+
