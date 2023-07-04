@@ -1,22 +1,27 @@
 <template>
-  <div class="registration-form">
-    <h2 class="form-title">Registro de Postulante</h2>
+  <div class="registration-page">
+    <div class="registration-form">
+      <img src="src/assets/txtlogo.png" class="logo" @click="redirectToHome" alt="Logo">
+      <div class="form-content">
+        <h2 class="form-title">-REGISTRO DE POSTULANTE-</h2>
 
-    <h3 class="form-subtitle">Datos de Usuario</h3>
-    <q-input outlined v-model="postulante.usuarioInsert.correo" label="Email" class="form-input"></q-input>
-    <q-input outlined v-model="postulante.usuarioInsert.password" label="Contraseña" type="password"
-      class="form-input"></q-input>
+        <h3 class="form-subtitle blue-text">Datos de Usuario</h3>
+        <q-input outlined v-model="postulante.usuarioInsert.correo" label="Email" class="form-input"></q-input>
+        <q-input outlined v-model="postulante.usuarioInsert.password" label="Contraseña" type="password"
+          class="form-input"></q-input>
 
-    <h3 class="form-subtitle">Datos de Postulante</h3>
-    <q-input outlined v-model="postulante.nombre" label="Nombre" class="form-input"></q-input>
-    <q-input outlined v-model="postulante.dni" label="DNI" class="form-input"></q-input>
-    <q-input outlined v-model="postulante.telefono" label="Teléfono" class="form-input"></q-input>
-    <q-input outlined v-model="postulante.direccion" label="Dirección" class="form-input"></q-input>
+        <h3 class="form-subtitle blue-text">Datos de Postulante</h3>
+        <q-input outlined v-model="postulante.nombre" label="Nombre" class="form-input"></q-input>
+        <q-input outlined v-model="postulante.dni" label="DNI" class="form-input"></q-input>
+        <q-input outlined v-model="postulante.telefono" label="Teléfono" class="form-input"></q-input>
+        <q-input outlined v-model="postulante.direccion" label="Dirección" class="form-input"></q-input>
 
-    <div class="form-actions">
-      <q-btn color="primary" label="Registrar" @click="register" :disable="disableRegisterButton"
-        class="form-btn"></q-btn>
-      <q-btn color="negative" label="Cancelar" @click="cancel" class="form-btn"></q-btn>
+        <div class="form-actions">
+          <q-btn color="primary" label="Registrar" @click="register" :disable="disableRegisterButton"
+            class="form-btn"></q-btn>
+          <q-btn color="negative" label="Cancelar" @click="cancel" class="form-btn"></q-btn>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -84,45 +89,87 @@ export default {
       const { correo, password, nombre, direccion, dni, telefono } = this.postulante;
       return correo === "" || password === "" || nombre === "" || direccion === "" || dni === "" || telefono === "";
     },
+    redirectToHome() {
+      // Redirecciona a la página principal (home)
+      this.$router.push("/home");
+    },
   },
 };
 </script>
 
 <style scoped>
+.registration-page {
+  background-image: url('src/assets/FONDOOK.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .registration-form {
-  max-width: 400px;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  background-image: url('src/assets/FONDOFORMSFINAL.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 20px;
+  box-shadow: 0px 2px 4px #ffffff1a;
+  text-align: center;
+  height: 90vh;
+  /* Ajusta la altura según tus necesidades */
+  overflow-y: auto;
+  /* Añade scroll vertical si el contenido excede la altura */
+}
+
+.logo {
+  width: 287px;
+  height: 58.1px;
+  margin: 10 auto;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.form-content {
+  margin-top: 20px;
 }
 
 .form-title {
-  text-align: center;
-  margin-bottom: 20px;
   font-size: 28px;
   font-weight: bold;
-  color: #333333;
+  color: #b9d5ff;
+  margin-bottom: 20px;
 }
 
 .form-subtitle {
   margin-top: 20px;
   font-size: 18px;
-  color: #333333;
+  color: #ffffff;
+}
+
+.form-subtitle.blue-text {
+  color: #e5eefd;
+  text-align: left;
 }
 
 .form-input {
   margin-bottom: 15px;
+  border-radius: 10px;
+  background-color: #e7e7e7;
 }
 
 .form-actions {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .form-btn {
   margin-right: 10px;
+  border-radius: 10px;
 }
 </style>
