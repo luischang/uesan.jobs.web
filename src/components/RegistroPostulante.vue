@@ -113,7 +113,7 @@ export default {
   max-width: 600px;
   margin: 0 auto;
   padding: 40px;
-  background-image: url('src/assets/FONDOFORMSFINAL.jpeg');
+  background-image: url('src/assets/fondoformsss.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -122,6 +122,7 @@ export default {
   text-align: center;
   height: 90vh;
   /* Ajusta la altura según tus necesidades */
+  width: 500px;
   overflow-y: auto;
   /* Añade scroll vertical si el contenido excede la altura */
 }
