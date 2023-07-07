@@ -75,7 +75,7 @@ export default {
         // No hay competencias seleccionadas, no se realiza ningún registro
         this.$router.push("/home");
         this.$q.notify({
-          message: "No hay competencias seleccionadas",
+          message: "Postulante registrado sin competencias",
           color: "warning",
           position: "bottom",
           timeout: 3000,

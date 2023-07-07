@@ -48,9 +48,21 @@ export default {
   },
   methods: {
     register() {
+
       if (this.checkEmptyFields()) {
         this.$q.notify({
           message: "Por favor, complete todos los campos.",
+          color: "negative",
+          position: "top",
+          timeout: 3000,
+        });
+        return;
+      }
+
+
+      if (this.empresa.ruc.length !== 11) {
+        this.$q.notify({
+          message: "El RUC debe tener 11 números.",
           color: "negative",
           position: "top",
           timeout: 3000,
@@ -132,7 +144,7 @@ export default {
   width: 287px;
   height: 58.1px;
   margin: 10px auto;
-  margin-top: 40px;
+  margin-top: 10px;
   cursor: pointer;
 }
 

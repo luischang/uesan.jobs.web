@@ -10,10 +10,10 @@
       <input v-model="password" type="password" placeholder="Contraseña" class="login-input" />
     </div>
 
-    <q-btn color="white" text-color="blue" class="login-button" :class="{ hovered: isButtonHovered }" label="LOG IN"
-      @click="login"></q-btn>
+    <q-btn color="white" text-color="blue" class="login-button" :class="{ hovered: isButtonHovered }"
+      label="INICIAR SESIÓN" @click="login"></q-btn>
 
-    <q-btn color="white" text-color="red" class="logout-button" label="Salir" @click="logout"></q-btn>
+    <q-btn color="white" text-color="red" class="logout-button" label="INGRESAR COMO INVITADO" @click="logout"></q-btn>
 
     <button @click="goRegistrationPostulante" class="register-button">
       ¿Busca trabajo? ¡Regístrese como postulante!
