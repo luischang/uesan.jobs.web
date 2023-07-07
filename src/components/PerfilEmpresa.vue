@@ -1,6 +1,5 @@
 <template>
   <div class="perfil-empresa-container">
-    <h2 class="pre-titulo">Perfil Empresa</h2>
     <div v-if="empresa">
       <h1 class="titulo">{{ empresa.nombre }}</h1>
       <div class="empresa-info">
@@ -15,18 +14,15 @@
         @click="crearOferta"></q-btn>
     </div>
     <div class="ofertas-container">
-      <h3>Ofertas de la empresa:</h3>
+      <h3 class="titulo-ofertas">Ofertas de la empresa:</h3>
       <div class="ofertas-list" v-if="ofertas.length > 0">
         <div class="oferta-item" v-for="oferta in ofertas" :key="oferta.idOferta">
           <h4>{{ oferta.puesto }}</h4>
-          <p><strong>Descripción: </strong>{{ oferta.descripcion }}</p>
           <q-btn color="primary" label="Ver más" class="ver-mas-btn" @click="verDetalles(oferta.idOferta)"></q-btn>
         </div>
       </div>
       <p v-else>No se encontraron ofertas.</p>
     </div>
-
-
   </div>
 </template>
 
@@ -90,33 +86,34 @@ export default {
 <style scoped>
 .perfil-empresa-container {
   padding: 20px;
-  background-color: #b3e5fc;
+  background-color: #004add;
   text-align: center;
 }
 
-.pre-titulo {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 0;
-}
-
 .titulo {
-  font-size: 30px;
+  font-size: 40px;
   font-weight: bold;
+  color: #ffffff;
+  margin-top: 20px;
 }
 
 .empresa-info {
   margin-top: 20px;
-  font-size: 18px;
+  font-size: 24px;
+  color: #ffffff;
 }
 
 .regresar-btn {
   margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .crear-oferta-btn {
   margin-top: 20px;
   margin-left: 10px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .botones-container {
@@ -125,12 +122,20 @@ export default {
 }
 
 .ofertas-container {
-  background-color: #a1c5db;
+  background-color: #004add;
   margin-top: 40px;
   max-height: 400px;
   overflow-y: auto;
+  padding: 20px;
+  border-radius: 10px;
 }
 
+.titulo-ofertas {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
 
 .ofertas-list {
   margin-bottom: 20px;
@@ -141,10 +146,29 @@ export default {
 
 .oferta-item {
   margin-bottom: 20px;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.h4 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #004add;
+}
+
+.p {
+  margin: 0;
+  font-size: 20px;
+  color: #004add;
 }
 
 .ver-mas-btn {
   margin-top: 10px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 /* Estilos de fuente atractivos */

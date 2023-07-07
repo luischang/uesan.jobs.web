@@ -5,7 +5,7 @@ const routes = [
   },
   {
     path: "/login",
-    component: () => import("pages/Log-in.vue"),
+    component: () => import("components/Log-in.vue"),
   },
   {
     path: "/registroEmpresa",

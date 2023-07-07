@@ -1,8 +1,10 @@
 <template>
   <div class="home-page">
     <header class="header">
-      <div class="logo">
-        <img src="src/assets/jobsitelogo.png" alt="Logo" />
+      <div class="logo-container">
+        <div class="logo">
+          <img src="src/assets/jobsitelogo.png" alt="Logo" />
+        </div>
       </div>
       <div class="buttons">
         <template v-if="postulanteAutenticado || empresaAutenticada">
@@ -41,16 +43,18 @@
       </div>
       <div v-if="ofertas.length > 0" class="ofertas-section">
         <h2 class="ofertas-title">Ofertas disponibles</h2>
-        <ul>
+        <ul class="ofertas-list">
           <li v-for="oferta in ofertas" :key="oferta.idOferta">
             <div class="oferta-details">
-              <div class="oferta-puesto">
-                <strong>Puesto:</strong> {{ oferta.puesto }}
-              </div>
-              <div class="oferta-empresa">
-                <strong>Empresa: </strong>
-                <template v-if="!empresaSeleccionada && oferta.empresa">{{ oferta.empresa.nombre }}</template>
-                <template v-else>{{ empresaSeleccionada }}</template>
+              <div class="oferta-info">
+                <div class="oferta-puesto">
+                  <strong>Puesto:</strong> {{ oferta.puesto }}
+                </div>
+                <div class="oferta-empresa">
+                  <strong>Empresa: </strong>
+                  <template v-if="!empresaSeleccionada && oferta.empresa">{{ oferta.empresa.nombre }}</template>
+                  <template v-else>{{ empresaSeleccionada }}</template>
+                </div>
               </div>
               <button class="ver-mas-button" @click="verMas(oferta)">
                 Ver más
@@ -63,7 +67,7 @@
         <h2 class="detalle-oferta-title">{{ ofertaSeleccionada.puesto }}</h2>
         <div class="detalle-oferta-info">
           <div class="detalle-oferta-empresa">
-            <strong>Empresa:</strong>
+            <strong>Empresa: </strong>
             <template v-if="!empresaSeleccionada">{{ ofertaSeleccionada.empresa.nombre }}</template>
             <template v-else>{{ empresaSeleccionada }}</template>
           </div>
@@ -89,16 +93,18 @@
             <strong>Fecha de Creación:</strong> {{ getFormattedDate(ofertaSeleccionada.fechaCreacion) }}
           </div>
         </div>
-        <router-link :to="'/OfertaPostular/' + ofertaSeleccionada.idOferta" class="postular-button">
-          Ver Oferta
-        </router-link>
-        <router-link v-if="!empresaSeleccionada" :to="'/perfilEmpresa/' + ofertaSeleccionada.empresa.idEmpresa"
-          class="ver-empresa-button">
-          Ver Empresa
-        </router-link>
-        <router-link v-else :to="'/perfilEmpresa/' + ofertaSeleccionada.idEmpresa" class="ver-empresa-button">
-          Ver Empresa
-        </router-link>
+        <div class="botones">
+          <router-link :to="'/OfertaPostular/' + ofertaSeleccionada.idOferta" class="postular-button boton">
+            Ver Oferta
+          </router-link>
+          <router-link v-if="!empresaSeleccionada" :to="'/perfilEmpresa/' + ofertaSeleccionada.empresa.idEmpresa"
+            class="ver-empresa-button">
+            Ver Empresa
+          </router-link>
+          <router-link v-else :to="'/perfilEmpresa/' + ofertaSeleccionada.idEmpresa" class="ver-empresa-button boton">
+            Ver Empresa
+          </router-link>
+        </div>
 
       </div>
     </div>
@@ -143,12 +149,16 @@ export default {
         .get("http://localhost:5158/api/Empresa/GetAll")
         .then((response) => {
           this.empresas = response.data;
+          this.ordenarEmpresas();
         })
         .catch((error) => {
           console.error("Error al obtener las empresas:", error);
         });
     },
 
+    ordenarEmpresas() {
+      this.empresas.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    },
 
     fetchOfertas() {
       this.ofertaSeleccionada = null;
@@ -159,14 +169,20 @@ export default {
           this.ofertas = ofertas.filter((oferta) =>
             oferta.puesto.toLowerCase().includes(this.filtro.toLowerCase())
           );
+          this.ordenarOfertas();
         })
         .catch((error) => {
           console.error("Error al obtener las ofertas:", error);
         });
     },
+
+    ordenarOfertas() {
+      this.ofertas.sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion));
+    },
     filtrarPorEmpresa() {
 
       if (this.empresaSeleccionada) {
+        this.ofertaSeleccionada = null;
         const empresa = this.empresas.find(empresa => empresa.nombre.trim().toLowerCase() === this.empresaSeleccionada.trim().toLowerCase());
         if (empresa) {
           const empresaId = empresa.idEmpresa;
@@ -230,7 +246,6 @@ export default {
 };
 
 </script>
-
 <style scoped>
 .home-page {
   display: flex;
@@ -238,6 +253,10 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  background-image: url('src/assets/botonhome222.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .header {
@@ -245,14 +264,22 @@ export default {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  background-color: #004aad;
+  background-color: transparent;
   padding: 20px;
   color: white;
 }
 
+.logo-container {
+  background-color: rgba(0, 74, 173, 0.8);
+  ;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
 .logo img {
-  width: 50px;
-  height: 50px;
+  width: 170px;
+  height: 70px;
 }
 
 .buttons {
@@ -260,6 +287,7 @@ export default {
   align-items: center;
 }
 
+.logout-button,
 .enter-button {
   background-color: white;
   border: 1px solid #0079c2;
@@ -268,9 +296,10 @@ export default {
   margin-right: 10px;
 }
 
+.profile-button,
 .register-button {
   background-color: #0079c2;
-  border: none;
+  border: 1px solid white;
   color: white;
   padding: 10px 20px;
   margin-right: 10px;
@@ -308,37 +337,49 @@ export default {
   margin-left: 10px;
 }
 
-
-.ofertas-section {
+.ofertas-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  grid-gap: 20px;
   width: 100%;
-  height: 300px;
-  margin-top: 20px;
-  overflow-y: auto;
-  background-color: #004aad;
+  background-color: rgba(0, 74, 173, 0.8);
   color: white;
   padding: 20px;
-  grid-column: 2;
+  HEIGHT: 70vh;
+}
+
+.ofertas-list {
+  list-style-type: none;
 }
 
 .ofertas-title {
-  font-size: 24px;
+  font-size: 40px;
   margin-bottom: 10px;
 }
 
 .oferta-details {
-  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.oferta-info {
+  flex-grow: 1;
 }
 
 .oferta-puesto,
 .oferta-empresa {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .footer {
-  background-color: #004aad;
+  background-color: rgba(0, 74, 173, 0.8);
   padding: 20px;
   color: white;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .footer-content {
@@ -355,32 +396,32 @@ export default {
   margin-right: 10px;
 }
 
-
 .ver-mas-button {
   background-color: #0079c2;
   border: none;
   color: white;
   padding: 5px 10px;
-  margin-top: 10px;
   cursor: pointer;
+  margin-left: 20px;
+  margin-right: 50px;
 }
 
 .detalle-oferta-section {
   width: 100%;
-  background-color: #004aad;
+  background-color: rgba(0, 74, 173, 0.8);
   color: white;
   padding: 20px;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  height: 300px;
+  height: 65vh;
   overflow-y: auto;
   grid-column: 3;
 }
 
 .detalle-oferta-title {
-  font-size: 24px;
+  font-size: 36px;
   margin-bottom: 10px;
 }
 
@@ -396,7 +437,7 @@ export default {
 .detalle-oferta-ubicacion,
 .detalle-oferta-modalidad,
 .detalle-oferta-fecha-creacion {
-  font-size: 16px;
+  font-size: 24px;
   margin-top: 10px;
 }
 
@@ -410,31 +451,45 @@ export default {
   align-self: flex-start;
 }
 
-.ofertas-container {
-  display: grid;
-  grid-template-columns: 1fr 2fr 2fr;
-  grid-gap: 20px;
+.ofertas-section {
   width: 100%;
-
+  height: 65vh;
+  margin-top: 20px;
+  overflow-y: auto;
+  background-color: transparent;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 20px;
+  grid-column: 2;
+  align-items: center;
+  justify-content: center;
 }
 
-
-.profile-button {
-  background-color: #0079c2;
-  border: none;
+.footer {
+  background-color: rgba(0, 74, 173, 0.8);
+  padding: 20px;
   color: white;
-  padding: 10px 20px;
-  margin-right: 10px;
-  text-decoration: none;
+  margin-top: 20px;
 }
 
-.logout-button {
-  background-color: #0079c2;
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-buttons button {
+  background-color: transparent;
   border: none;
   color: white;
-  padding: 10px 20px;
+  padding: 0 10px;
   margin-right: 10px;
-  cursor: pointer;
+}
+
+.contact-button,
+.support-button,
+.privacy-button {
+  color: white;
 }
 
 .ver-empresa-button {
@@ -461,12 +516,20 @@ export default {
 
 .filtrar-empresa-section {
   width: 100%;
-  height: 300px;
+  height: 65vh;
   margin-top: 20px;
   overflow-y: auto;
-  background-color: #004aad;
+  background-color: rgba(0, 74, 173, 0.8);
   color: white;
   padding: 20px;
   grid-column: 1;
+}
+
+.botones {
+  margin-top: 20px;
+}
+
+.boton {
+  margin-right: 10px;
 }
 </style>
